@@ -32,7 +32,7 @@ class LocationsService {
 
         Location location = new Location();
         location.setCity(city);
-        location.setRegion(region);
+        location.setRegion(region); // todo if user pass there an empty value (eg. "  ") you can set null
         location.setCountry(country);
         location.setLongitude(longitude);
         location.setLongitudeDirection(specifyLongitudeDirection(longitude));

@@ -12,7 +12,7 @@ class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;    // todo you can try to use UUID instead of long
     private String city;
     private String region;
     private String country;
@@ -20,8 +20,8 @@ class Location {
     private Integer latitude;
 
     @Enumerated(EnumType.STRING)
-    private LongitudeDirection longitudeDirection;
+    private LongitudeDirection longitudeDirection;  // todo it is unnecessary, you can calculate it based on longitude value
 
     @Enumerated(EnumType.STRING)
-    private LatitudeDirection latitudeDirection;
+    private LatitudeDirection latitudeDirection;  // todo it is unnecessary, you can calculate it based on latitude value
 }
