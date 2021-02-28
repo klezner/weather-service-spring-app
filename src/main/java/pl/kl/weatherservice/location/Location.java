@@ -2,8 +2,11 @@ package pl.kl.weatherservice.location;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -11,17 +14,23 @@ import javax.persistence.*;
 class Location {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;    // todo you can try to use UUID instead of long
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator",
+            parameters = {
+                    @Parameter(
+                            name = "uuid_gen_strategy_class",
+                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+                    )
+            }
+    )
+    private UUID id;
     private String city;
     private String region;
     private String country;
-    private Integer longitude;
-    private Integer latitude;
-
-    @Enumerated(EnumType.STRING)
-    private LongitudeDirection longitudeDirection;  // todo it is unnecessary, you can calculate it based on longitude value
-
-    @Enumerated(EnumType.STRING)
-    private LatitudeDirection latitudeDirection;  // todo it is unnecessary, you can calculate it based on latitude value
+    private Double latitude;
+    private String latitudeDirection;
+    private Double longitude;
+    private String longitudeDirection;
 }

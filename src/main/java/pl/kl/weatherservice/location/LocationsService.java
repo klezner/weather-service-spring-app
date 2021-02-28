@@ -16,11 +16,11 @@ class LocationsService {
 
     private final LocationsRepository locationsRepository;
 
-    Location createLocation(String city, String region, String country, Integer longitude, Integer latitude) {
-        if (city.isEmpty()) {
+    Location createLocation(String city, String region, String country, Double latitude, Double longitude) {
+        if (isStringEmpty(city)) {
             throw new EmptyInputException("Value cannot be empty.");
         }
-        if (country.isEmpty()) {
+        if (isStringEmpty(country)) {
             throw new EmptyInputException("Value cannot be empty.");
         }
         if (longitude < WEST_LIMIT || longitude > EAST_LIMIT) {
@@ -32,27 +32,42 @@ class LocationsService {
 
         Location location = new Location();
         location.setCity(city);
-        location.setRegion(region); // todo if user pass there an empty value (eg. "  ") you can set null
+        location.setRegion(checkRegionValue(region));
         location.setCountry(country);
-        location.setLongitude(longitude);
-        location.setLongitudeDirection(specifyLongitudeDirection(longitude));
         location.setLatitude(latitude);
         location.setLatitudeDirection(specifyLatitudeDirection(latitude));
+        location.setLongitude(longitude);
+        location.setLongitudeDirection(specifyLongitudeDirection(longitude));
 
         return locationsRepository.save(location);
     }
 
-    private LongitudeDirection specifyLongitudeDirection(Integer longitude) {
-        if (longitude < 0) {
-            return LongitudeDirection.WEST;
-        }
-        return LongitudeDirection.EAST;
+    private boolean isStringEmpty(String string) {
+        return string == null || string.trim().isEmpty();
     }
 
-    private LatitudeDirection specifyLatitudeDirection(Integer latitude) {
-        if (latitude < 0) {
-            return LatitudeDirection.SOUTH;
+    private String specifyLongitudeDirection(Double longitude) {
+        if (longitude < 0) {
+            return CardinalDirection.WEST.getAbbreviation();
+        } else if (longitude > 0) {
+            return CardinalDirection.EAST.getAbbreviation();
         }
-        return LatitudeDirection.NORTH;
+        return null;
+    }
+
+    private String specifyLatitudeDirection(Double latitude) {
+        if (latitude > 0) {
+            return CardinalDirection.NORTH.getAbbreviation();
+        } else if (latitude < 0) {
+            return CardinalDirection.SOUTH.getAbbreviation();
+        }
+        return null;
+    }
+
+    private String checkRegionValue(String region) {
+        if (isStringEmpty(region)) {
+            return null;
+        }
+        return region;
     }
 }

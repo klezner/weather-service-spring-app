@@ -11,6 +11,6 @@ class CreateLocationRequest {
     private String city;
     private String region;
     private String country;
-    private Integer longitude;
-    private Integer latitude;
+    private Double latitude;
+    private Double longitude;
 }

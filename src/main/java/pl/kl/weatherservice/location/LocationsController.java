@@ -20,18 +20,17 @@ class LocationsController {
                 request.getCity(),
                 request.getRegion(),
                 request.getCountry(),
-                request.getLongitude(),
-                request.getLatitude()
+                request.getLatitude(),
+                request.getLongitude()
         );
 
         NewLocationResponse responseBody = new NewLocationResponse(
+                location.getId().toString(),
                 location.getCity(),
                 location.getRegion(),
                 location.getCountry(),
-                location.getLongitude(),
-                location.getLongitudeDirection().abbreviation,
-                location.getLatitude(),
-                location.getLatitudeDirection().abbreviation
+                location.getLatitude() + "(" + location.getLatitudeDirection() + ")",
+                location.getLongitude() + "(" + location.getLongitudeDirection() + ")"
         );
 
         return ResponseEntity
