@@ -1,5 +1,7 @@
 package pl.kl.weatherservice.location;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,8 +11,10 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 class Location {
 
     @Id

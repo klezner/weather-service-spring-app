@@ -11,8 +11,8 @@ class LocationsService {
 
     private final Double NORTH_LIMIT = 90.0;
     private final Double SOUTH_LIMIT = -90.0;
-    private final Double WEST_LIMIT = -180.0;
     private final Double EAST_LIMIT = 180.0;
+    private final Double WEST_LIMIT = -180.0;
 
     private final LocationsRepository locationsRepository;
 
@@ -23,10 +23,10 @@ class LocationsService {
         if (isStringEmpty(country)) {
             throw new EmptyInputException("Value cannot be empty.");
         }
-        if (longitude < WEST_LIMIT || longitude > EAST_LIMIT) {
+        if (latitude < SOUTH_LIMIT || latitude > NORTH_LIMIT) {
             throw new InputOutOfRangeException("Value is out of range.");
         }
-        if (latitude < SOUTH_LIMIT || longitude > NORTH_LIMIT) {
+        if (longitude < WEST_LIMIT || longitude > EAST_LIMIT) {
             throw new InputOutOfRangeException("Value is out of range.");
         }
 
@@ -46,20 +46,20 @@ class LocationsService {
         return string == null || string.trim().isEmpty();
     }
 
+    private String specifyLatitudeDirection(Double latitude) {
+        if (latitude > 0) {
+            return CardinalDirection.NORTH.getAbbreviation();
+        } if (latitude < 0) {
+            return CardinalDirection.SOUTH.getAbbreviation();
+        }
+        return null;
+    }
+
     private String specifyLongitudeDirection(Double longitude) {
         if (longitude < 0) {
             return CardinalDirection.WEST.getAbbreviation();
         } else if (longitude > 0) {
             return CardinalDirection.EAST.getAbbreviation();
-        }
-        return null;
-    }
-
-    private String specifyLatitudeDirection(Double latitude) {
-        if (latitude > 0) {
-            return CardinalDirection.NORTH.getAbbreviation();
-        } else if (latitude < 0) {
-            return CardinalDirection.SOUTH.getAbbreviation();
         }
         return null;
     }
