@@ -17,6 +17,10 @@ import java.util.UUID;
 @Builder
 class Location {
 
+    // todo yeah, I've read https://thorben-janssen.com/generate-uuids-primary-keys-hibernate/
+    //  and https://docs.jboss.org/hibernate/core/3.6/reference/en-US/html/mapping.html#d0e5294
+    //  and I think uuid2 generator is good as well
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -29,12 +33,12 @@ class Location {
                     )
             }
     )
-    private UUID id;
+    private UUID id;    // todo String is more useful
     private String city;
     private String region;
     private String country;
     private Double latitude;
-    private String latitudeDirection;
+    private String latitudeDirection;   // todo we agreed this value is unnecessary, it may be calculated based on latitude value
     private Double longitude;
-    private String longitudeDirection;
+    private String longitudeDirection; // todo same there
 }

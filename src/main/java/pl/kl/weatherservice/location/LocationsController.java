@@ -24,7 +24,7 @@ class LocationsController {
                 request.getLongitude()
         );
 
-        NewLocationResponse responseBody = new NewLocationResponse(
+        NewLocationResponse responseBody = new NewLocationResponse( // todo move it to a mapper
                 location.getId().toString(),
                 location.getCity(),
                 location.getRegion(),

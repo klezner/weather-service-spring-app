@@ -24,7 +24,7 @@ public class LocationsServiceTest {
     @Test
     void createLocation_createsNewLocation() {
         // given
-        when(locationsRepository.save(any())).thenReturn(Location.builder()
+        when(locationsRepository.save(any())).thenReturn(Location.builder() // todo you can create LocationTestHelper class to create a sample Location for test purposes
                 .city("Gdansk")
                 .region("Pomeranian")
                 .country("Poland")

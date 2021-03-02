@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import pl.kl.weatherservice.exceptions.EmptyInputException;
 import pl.kl.weatherservice.exceptions.InputOutOfRangeException;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 class LocationsService {
@@ -32,7 +34,7 @@ class LocationsService {
 
         Location location = new Location();
         location.setCity(city);
-        location.setRegion(checkRegionValue(region));
+        location.setRegion(checkRegionValue(region)); // todo Optional.ofNullable(region).filter(String::isBlank).orElse(null);
         location.setCountry(country);
         location.setLatitude(latitude);
         location.setLatitudeDirection(specifyLatitudeDirection(latitude));
@@ -43,7 +45,7 @@ class LocationsService {
     }
 
     private boolean isStringEmpty(String string) {
-        return string == null || string.trim().isEmpty();
+        return string == null || string.trim().isEmpty();   // todo try to use isBlank() instead of isEmpty()
     }
 
     private String specifyLatitudeDirection(Double latitude) {
