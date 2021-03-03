@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/location")
 class LocationsController {
 
+    private final LocationMapper locationMapper;
     private final LocationsService locationsService;
 
     @PostMapping()
@@ -24,14 +25,7 @@ class LocationsController {
                 request.getLongitude()
         );
 
-        NewLocationResponse responseBody = new NewLocationResponse( // todo move it to a mapper
-                location.getId().toString(),
-                location.getCity(),
-                location.getRegion(),
-                location.getCountry(),
-                location.getLatitude() + "(" + location.getLatitudeDirection() + ")",
-                location.getLongitude() + "(" + location.getLongitudeDirection() + ")"
-        );
+        NewLocationResponse responseBody = locationMapper.mapLocationToNewLocationResponse(locationsService, location);
 
         return ResponseEntity
                 .status(201)

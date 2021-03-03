@@ -6,6 +6,7 @@ import pl.kl.weatherservice.exceptions.EmptyInputException;
 import pl.kl.weatherservice.exceptions.InputOutOfRangeException;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 @RequiredArgsConstructor
@@ -34,42 +35,33 @@ class LocationsService {
 
         Location location = new Location();
         location.setCity(city);
-        location.setRegion(checkRegionValue(region)); // todo Optional.ofNullable(region).filter(String::isBlank).orElse(null);
+        location.setRegion(Optional.ofNullable(region).filter(Predicate.not(String::isBlank)).orElse(null));
         location.setCountry(country);
         location.setLatitude(latitude);
-        location.setLatitudeDirection(specifyLatitudeDirection(latitude));
         location.setLongitude(longitude);
-        location.setLongitudeDirection(specifyLongitudeDirection(longitude));
 
         return locationsRepository.save(location);
     }
 
     private boolean isStringEmpty(String string) {
-        return string == null || string.trim().isEmpty();   // todo try to use isBlank() instead of isEmpty()
+        return string == null || string.isBlank();
     }
 
-    private String specifyLatitudeDirection(Double latitude) {
+    String specifyLatitudeDirection(Double latitude) {
         if (latitude > 0) {
-            return CardinalDirection.NORTH.getAbbreviation();
+            return "N";
         } if (latitude < 0) {
-            return CardinalDirection.SOUTH.getAbbreviation();
+            return "S";
         }
         return null;
     }
 
-    private String specifyLongitudeDirection(Double longitude) {
+    String specifyLongitudeDirection(Double longitude) {
         if (longitude < 0) {
-            return CardinalDirection.WEST.getAbbreviation();
+            return "W";
         } else if (longitude > 0) {
-            return CardinalDirection.EAST.getAbbreviation();
+            return "E";
         }
         return null;
-    }
-
-    private String checkRegionValue(String region) {
-        if (isStringEmpty(region)) {
-            return null;
-        }
-        return region;
     }
 }
