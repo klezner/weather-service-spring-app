@@ -1,6 +1,7 @@
 package pl.kl.weatherservice.location;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import pl.kl.weatherservice.exceptions.EmptyInputException;
 import pl.kl.weatherservice.exceptions.InputOutOfRangeException;
@@ -20,18 +21,10 @@ class LocationsService {
     private final LocationsRepository locationsRepository;
 
     Location createLocation(String city, String region, String country, Double latitude, Double longitude) {
-        if (isStringEmpty(city)) {
-            throw new EmptyInputException("Value cannot be empty.");
-        }
-        if (isStringEmpty(country)) {
-            throw new EmptyInputException("Value cannot be empty.");
-        }
-        if (latitude < SOUTH_LIMIT || latitude > NORTH_LIMIT) {
-            throw new InputOutOfRangeException("Value is out of range.");
-        }
-        if (longitude < WEST_LIMIT || longitude > EAST_LIMIT) {
-            throw new InputOutOfRangeException("Value is out of range.");
-        }
+        validateCity(city);
+        validateCountry(country);
+        validateLatitude(latitude);
+        validateLongitude(longitude);
 
         Location location = new Location();
         location.setCity(city);
@@ -43,25 +36,31 @@ class LocationsService {
         return locationsRepository.save(location);
     }
 
-    private boolean isStringEmpty(String string) {
-        return string == null || string.isBlank();
+    private void validateCity(String city) {
+        if (isStringBlank(city)) {
+            throw new EmptyInputException("City cannot be empty or null!");
+        }
     }
 
-    String specifyLatitudeDirection(Double latitude) {
-        if (latitude > 0) {
-            return "N";
-        } if (latitude < 0) {
-            return "S";
+    private void validateCountry(String country) {
+        if (isStringBlank(country)) {
+            throw new EmptyInputException("Country cannot be empty or null!");
         }
-        return null;
     }
 
-    String specifyLongitudeDirection(Double longitude) {
-        if (longitude < 0) {
-            return "W";
-        } else if (longitude > 0) {
-            return "E";
+    private void validateLatitude(Double latitude) {
+        if (latitude < SOUTH_LIMIT || latitude > NORTH_LIMIT) {
+            throw new InputOutOfRangeException("Latitude is out of range! The correct latitude range is from -90 to 90.");
         }
-        return null;
+    }
+
+    private void validateLongitude(Double longitude) {
+        if (longitude < WEST_LIMIT || longitude > EAST_LIMIT) {
+            throw new InputOutOfRangeException("Longitude is out of range! The correct longitude range is from -180 to 180.");
+        }
+    }
+
+    private boolean isStringBlank(String string) {
+        return StringUtils.isBlank(string);
     }
 }

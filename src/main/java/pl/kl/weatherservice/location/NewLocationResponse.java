@@ -14,6 +14,6 @@ class NewLocationResponse {
     private String city;
     private String region;
     private String country;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
 }

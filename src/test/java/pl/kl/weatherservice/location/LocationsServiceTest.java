@@ -24,7 +24,7 @@ public class LocationsServiceTest {
     @Test
     void createLocation_createsNewLocation() {
         // given
-        when(locationsRepository.save(any())).thenReturn(LocationTestHelper.LOCATION_GDANSK);
+        when(locationsRepository.save(any())).thenReturn(LocationTestHelper.provideLocationGdansk());
         // when
         Location location = locationsService.createLocation("Gdansk", "Pomeranian", "Poland", 54.3, 18.6);
         //then
@@ -111,9 +111,9 @@ public class LocationsServiceTest {
     @Test
     void createLocation_whenRegionIsEmpty_createsNewLocation() {
         // given
-        when(locationsRepository.save(any())).thenReturn(LocationTestHelper.LOCATION_COCHABAMBA);
+        when(locationsRepository.save(any())).thenReturn(LocationTestHelper.provideLocationCochabamba());
         // when
-        Location location = locationsService.createLocation("Cochabamba", null, "Bolivia", -17.4, -66.1);
+        Location location = locationsService.createLocation("Cochabamba", " ", "Bolivia", -17.4, -66.1);
         //then
         assertThat(location.getCity()).isEqualTo("Cochabamba");
         assertThat(location.getRegion()).isEqualTo(null);

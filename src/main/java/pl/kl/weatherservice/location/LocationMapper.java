@@ -11,8 +11,8 @@ class LocationMapper {
                 .city(location.getCity())
                 .region(location.getRegion())
                 .country(location.getCountry())
-                .latitude(location.getLatitude() + "(" + locationsService.specifyLatitudeDirection(location.getLatitude()) + ")")
-                .longitude(location.getLongitude() + "(" + locationsService.specifyLongitudeDirection(location.getLongitude()) + ")")
+                .latitude(location.getLatitude())
+                .longitude(location.getLongitude())
                 .build();
     }
 }
