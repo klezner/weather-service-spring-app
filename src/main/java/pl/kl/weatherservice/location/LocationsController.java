@@ -26,10 +26,8 @@ class LocationsController {
                 request.getLongitude()
         );
 
-        NewLocationResponse responseBody = locationMapper.mapLocationToNewLocationResponse(locationsService, location);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(responseBody);
+                .body(locationMapper.mapLocationToNewLocationResponse(location));
     }
 }

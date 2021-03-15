@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 class LocationMapper {
 
-    NewLocationResponse mapLocationToNewLocationResponse(LocationsService locationsService, Location location) {
+    NewLocationResponse mapLocationToNewLocationResponse(Location location) {
         return NewLocationResponse.builder()
                 .id(location.getId())
                 .city(location.getCity())

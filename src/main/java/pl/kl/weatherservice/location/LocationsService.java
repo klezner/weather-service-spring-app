@@ -28,7 +28,7 @@ class LocationsService {
 
         Location location = new Location();
         location.setCity(city);
-        location.setRegion(Optional.ofNullable(region).filter(Predicate.not(String::isBlank)).orElse(null));
+        Optional.ofNullable(region).filter(Predicate.not(String::isBlank)).ifPresent(location::setRegion);
         location.setCountry(country);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
@@ -37,13 +37,13 @@ class LocationsService {
     }
 
     private void validateCity(String city) {
-        if (isStringBlank(city)) {
+        if (StringUtils.isBlank(city)) {
             throw new EmptyInputException("City cannot be empty or null!");
         }
     }
 
     private void validateCountry(String country) {
-        if (isStringBlank(country)) {
+        if (StringUtils.isBlank(country)) {
             throw new EmptyInputException("Country cannot be empty or null!");
         }
     }
@@ -58,9 +58,5 @@ class LocationsService {
         if (longitude < WEST_LIMIT || longitude > EAST_LIMIT) {
             throw new InputOutOfRangeException("Longitude is out of range! The correct longitude range is from -180 to 180.");
         }
-    }
-
-    private boolean isStringBlank(String string) {
-        return StringUtils.isBlank(string);
     }
 }

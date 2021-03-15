@@ -1,13 +1,9 @@
 package pl.kl.weatherservice.location;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Getter
 @Builder
 class NewLocationResponse {
     private String id;
