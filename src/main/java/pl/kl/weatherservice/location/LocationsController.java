@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/location")
@@ -17,7 +19,7 @@ class LocationsController {
     private final LocationsService locationsService;
 
     @PostMapping()
-    ResponseEntity<NewLocationResponse> postLocation(@RequestBody CreateLocationRequest request) {
+    ResponseEntity<NewLocationResponse> addLocation(@RequestBody @Valid CreateLocationRequest request) {
         Location location = locationsService.createLocation(
                 request.getCity(),
                 request.getRegion(),

@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 class NewLocationResponse {
+
     private String id;
     private String city;
     private String region;
