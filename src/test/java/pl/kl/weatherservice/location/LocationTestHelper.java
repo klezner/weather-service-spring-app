@@ -2,7 +2,7 @@ package pl.kl.weatherservice.location;
 
 final class LocationTestHelper {
 
-    static Location provideLocationGdansk() {
+    static Location provideLocation() {
         return Location.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
@@ -12,23 +12,83 @@ final class LocationTestHelper {
                 .build();
     }
 
-    static Location provideLocationCochabamba() {
+    static Location provideLocationWithEmptyRegion() {
         return Location.builder()
-                .city("Cochabamba")
+                .city("Gdansk")
                 .region(null)
-                .country("Bolivia")
-                .latitude(-17.4)
-                .longitude(-66.1)
+                .country("Poland")
+                .latitude(54.3)
+                .longitude(18.6)
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestGdansk() {
+    static CreateLocationRequest provideLocationRequest() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
                 .country("Poland")
                 .latitude(54.3)
                 .longitude(18.6)
+                .build();
+    }
+
+    static CreateLocationRequest provideLocationRequestWithEmptyCity() {
+        return CreateLocationRequest.builder()
+                .city("")
+                .region("Pomeranian")
+                .country("Poland")
+                .latitude(54.3)
+                .longitude(18.6)
+                .build();
+    }
+
+    static CreateLocationRequest provideLocationRequestWithNullCity() {
+        return CreateLocationRequest.builder()
+                .city(null)
+                .region("Pomeranian")
+                .country("Poland")
+                .latitude(54.3)
+                .longitude(18.6)
+                .build();
+    }
+
+    static CreateLocationRequest provideLocationRequestWithEmptyCountry() {
+        return CreateLocationRequest.builder()
+                .city("Gdansk")
+                .region("Pomeranian")
+                .country("")
+                .latitude(54.3)
+                .longitude(18.6)
+                .build();
+    }
+
+    static CreateLocationRequest provideLocationRequestWithNullCountry() {
+        return CreateLocationRequest.builder()
+                .city("Gdansk")
+                .region("Pomeranian")
+                .country(null)
+                .latitude(54.3)
+                .longitude(18.6)
+                .build();
+    }
+
+    static CreateLocationRequest provideLocationRequestWithLatitudeOutOfRange() {
+        return CreateLocationRequest.builder()
+                .city("Gdansk")
+                .region("Pomeranian")
+                .country("Poland")
+                .latitude(154.3)
+                .longitude(18.6)
+                .build();
+    }
+
+    static CreateLocationRequest provideLocationRequestWithLongitudeOutOfRange() {
+        return CreateLocationRequest.builder()
+                .city("Gdansk")
+                .region("Pomeranian")
+                .country("Poland")
+                .latitude(54.3)
+                .longitude(218.6)
                 .build();
     }
 }
