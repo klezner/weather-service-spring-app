@@ -2,6 +2,8 @@ package pl.kl.weatherservice.location;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,20 +20,22 @@ public class LocationServiceTest {
     LocationRepository locationRepository;
     @InjectMocks
     LocationService locationService;
+    @Captor
+    ArgumentCaptor<Location> locationArgumentCaptor;
 
     @Test
     void createLocation_thenCreatesNewLocation() {
         // given
         when(locationRepository.save(any())).thenReturn(LocationTestHelper.provideLocation());
         // when
-        Location location = locationService.createLocation("Gdansk", "Pomeranian", "Poland", 54.3, 18.6);
+        locationService.createLocation("Gdansk", "Pomeranian", "Poland", 54.3, 18.6);
         //then
-        assertThat(location.getCity()).isEqualTo("Gdansk");
-        assertThat(location.getRegion()).isEqualTo("Pomeranian");
-        assertThat(location.getCountry()).isEqualTo("Poland");
-        assertThat(location.getLatitude()).isEqualTo(54.3);
-        assertThat(location.getLongitude()).isEqualTo(18.6);
-        verify(locationRepository).save(any());
+        verify(locationRepository).save(locationArgumentCaptor.capture());
+        assertThat(locationArgumentCaptor.getValue().getCity().equals("Gdansk"));
+        assertThat(locationArgumentCaptor.getValue().getRegion().equals("Pomeranian"));
+        assertThat(locationArgumentCaptor.getValue().getCountry().equals("Poland"));
+        assertThat(locationArgumentCaptor.getValue().getLatitude().equals(54.3));
+        assertThat(locationArgumentCaptor.getValue().getLongitude().equals(18.6));
     }
 
     @Test
@@ -39,13 +43,13 @@ public class LocationServiceTest {
         // given
         when(locationRepository.save(any())).thenReturn(LocationTestHelper.provideLocationWithEmptyRegion());
         // when
-        Location location = locationService.createLocation("Gdansk", "", "Poland", 54.3, 18.6);
+        locationService.createLocation("Gdansk", "", "Poland", 54.3, 18.6);
         //then
-        assertThat(location.getCity()).isEqualTo("Gdansk");
-        assertThat(location.getRegion()).isEqualTo(null);
-        assertThat(location.getCountry()).isEqualTo("Poland");
-        assertThat(location.getLatitude()).isEqualTo(54.3);
-        assertThat(location.getLongitude()).isEqualTo(18.6);
-        verify(locationRepository).save(any());
+        verify(locationRepository).save(locationArgumentCaptor.capture());
+        assertThat(locationArgumentCaptor.getValue().getCity().equals("Gdansk"));
+        assertThat(locationArgumentCaptor.getValue().getRegion() == null);
+        assertThat(locationArgumentCaptor.getValue().getCountry().equals("Poland"));
+        assertThat(locationArgumentCaptor.getValue().getLatitude().equals(54.3));
+        assertThat(locationArgumentCaptor.getValue().getLongitude().equals(18.6));
     }
 }

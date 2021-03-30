@@ -3,19 +3,17 @@ package pl.kl.weatherservice.location;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Builder
 class CreateLocationRequest {
 
-    @NotNull(message = "City is mandatory!")
-    @NotEmpty(message = "City is mandatory!")
     @NotBlank(message = "City is mandatory!")
     private String city;
     private String region;
-    @NotNull(message = "Country is mandatory!")
-    @NotEmpty(message = "Country is mandatory!")
     @NotBlank(message = "Country is mandatory!")
     private String country;
     @Min(value = -90, message = "Latitude value is too small! The correct latitude range is from -90 to 90.")
