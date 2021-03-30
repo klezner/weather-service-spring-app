@@ -13,14 +13,14 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/location")
-class LocationsController {
+class LocationController {
 
     private final LocationMapper locationMapper;
-    private final LocationsService locationsService;
+    private final LocationService locationService;
 
     @PostMapping()
     ResponseEntity<NewLocationResponse> addLocation(@RequestBody @Valid CreateLocationRequest request) {
-        Location location = locationsService.createLocation(
+        Location location = locationService.createLocation(
                 request.getCity(),
                 request.getRegion(),
                 request.getCountry(),

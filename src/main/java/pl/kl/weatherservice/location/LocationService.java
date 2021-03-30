@@ -8,9 +8,9 @@ import java.util.function.Predicate;
 
 @Component
 @RequiredArgsConstructor
-class LocationsService {
+class LocationService {
 
-    private final LocationsRepository locationsRepository;
+    private final LocationRepository locationRepository;
 
     Location createLocation(String city, String region, String country, Double latitude, Double longitude) {
         Location location = new Location();
@@ -20,6 +20,6 @@ class LocationsService {
         location.setLatitude(latitude);
         location.setLongitude(longitude);
 
-        return locationsRepository.save(location);
+        return locationRepository.save(location);
     }
 }
