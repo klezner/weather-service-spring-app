@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.kl.weatherservice.security.User;
 import pl.kl.weatherservice.security.UserRepository;
 
+import java.util.Collections;
+
 @SpringBootApplication
 @RequiredArgsConstructor
 public class WeatherServiceApplication implements CommandLineRunner {
@@ -22,7 +24,7 @@ public class WeatherServiceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         userRepository.deleteAll();
-        userRepository.save(new User("user", passwordEncoder.encode("user1")));
-        userRepository.save(new User("admin", passwordEncoder.encode("admin1")));
+        userRepository.save(new User("user", passwordEncoder.encode("user1"), Collections.singletonList(() -> "ROLE_USER")));
+        userRepository.save(new User("admin", passwordEncoder.encode("admin1"), Collections.singletonList(() -> "ROLE_USER;ROLE_ADMIN")));
     }
 }
