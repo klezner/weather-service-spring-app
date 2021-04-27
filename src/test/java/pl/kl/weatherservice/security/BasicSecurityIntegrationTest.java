@@ -1,4 +1,4 @@
-package pl.kl.weatherservice;
+package pl.kl.weatherservice.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DemoControllerIntegrationTest {
+public class BasicSecurityIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
