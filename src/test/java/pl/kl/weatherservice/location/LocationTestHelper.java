@@ -1,6 +1,6 @@
 package pl.kl.weatherservice.location;
 
-final class LocationTestHelper {
+public final class LocationTestHelper {
 
     static Location provideLocation() {
         return Location.builder()
@@ -22,7 +22,7 @@ final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequest() {
+    public static CreateLocationRequest provideLocationRequest() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")

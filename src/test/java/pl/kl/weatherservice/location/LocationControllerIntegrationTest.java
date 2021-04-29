@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -33,6 +34,7 @@ public class LocationControllerIntegrationTest {
         locationRepository.deleteAll();
     }
 
+    @WithMockUser(username = "admin", password = "admin1", roles = {"ADMIN"})
     @Test
     void postLocation_thenReturns201AndSaveNewLocationInDb() throws Exception {
         // given
