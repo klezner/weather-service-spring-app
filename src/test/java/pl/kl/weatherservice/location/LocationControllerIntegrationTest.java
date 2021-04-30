@@ -36,7 +36,7 @@ public class LocationControllerIntegrationTest {
 
     @WithMockUser(username = "admin", password = "admin1", roles = {"ADMIN"})
     @Test
-    void postLocation_thenReturns201AndSaveNewLocationInDb() throws Exception {
+    void postLocation_thenReturns201AndSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequest();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -48,7 +48,7 @@ public class LocationControllerIntegrationTest {
                 .andReturn().getResponse();
         // then
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(locationRepository.findAll()).singleElement().satisfies(location -> {
+        assertThat(locationRepository.findAll()).hasOnlyOneElementSatisfying(location -> {
             assertThat(location.getId()).isInstanceOf(String.class);
             assertThat(location.getCity()).isEqualTo("Gdansk");
             assertThat(location.getRegion()).isEqualTo("Pomeranian");
@@ -59,7 +59,7 @@ public class LocationControllerIntegrationTest {
     }
 
     @Test
-    void postLocation_whenCityIsEmpty_thenReturns400AndDoesntSaveNewLocationInDb() throws Exception {
+    void postLocation_whenCityIsEmpty_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithEmptyCity();
 
@@ -76,7 +76,7 @@ public class LocationControllerIntegrationTest {
     }
 
     @Test
-    void postLocation_whenCityIsNull_thenReturns400AndDoesntSaveNewLocationInDb() throws Exception {
+    void postLocation_whenCityIsNull_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithNullCity();
 
@@ -93,7 +93,7 @@ public class LocationControllerIntegrationTest {
     }
 
     @Test
-    void postLocation_whenCountryIsEmpty_thenReturns400AndDoesntSaveNewLocationInDb() throws Exception {
+    void postLocation_whenCountryIsEmpty_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithEmptyCountry();
 
@@ -110,7 +110,7 @@ public class LocationControllerIntegrationTest {
     }
 
     @Test
-    void postLocation_whenCountryIsNull_thenReturns400AndDoesntSaveNewLocationInDb() throws Exception {
+    void postLocation_whenCountryIsNull_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithNullCountry();
 
@@ -127,7 +127,7 @@ public class LocationControllerIntegrationTest {
     }
 
     @Test
-    void postLocation_whenLatitudeIsOutOfRange_thenReturns400AndDoesntSaveNewLocationInDb() throws Exception {
+    void postLocation_whenLatitudeIsOutOfRange_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithLatitudeOutOfRange();
 
@@ -144,7 +144,7 @@ public class LocationControllerIntegrationTest {
     }
 
     @Test
-    void postLocation_whenLongitudeIsOutOfRange_thenReturns400AndDoesntSaveNewLocationInDb() throws Exception {
+    void postLocation_whenLongitudeIsOutOfRange_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
         CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithLongitudeOutOfRange();
 
