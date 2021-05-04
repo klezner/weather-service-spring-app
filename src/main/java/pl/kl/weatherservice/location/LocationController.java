@@ -20,7 +20,7 @@ class LocationController {
     private final LocationService locationService;
 
     @PostMapping()
-    @PreAuthorize("hasRole('${weatherservice.addlocation.permissionrole}')")
+    @PreAuthorize("hasRole('Roles.ADD_LOCATION_PERMISSION_ROLE')")
     ResponseEntity<NewLocationResponse> addLocation(@RequestBody @Valid CreateLocationRequest request) {
         Location location = locationService.createLocation(
                 request.getCity(),
