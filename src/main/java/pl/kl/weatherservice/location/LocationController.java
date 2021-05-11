@@ -3,11 +3,7 @@ package pl.kl.weatherservice.location;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,7 +16,7 @@ class LocationController {
     private final LocationService locationService;
 
     @PostMapping()
-    @PreAuthorize("hasRole('Roles.ADMIN')")
+//    @PreAuthorize("hasRole('Roles.ADMIN')")
     ResponseEntity<NewLocationResponse> addLocation(@RequestBody @Valid CreateLocationRequest request) {
         Location location = locationService.createLocation(
                 request.getCity(),
@@ -33,5 +29,22 @@ class LocationController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(locationMapper.mapLocationToNewLocationResponse(location));
+    }
+
+    @PutMapping()
+//    @PreAuthorize("hasRole('Roles.ADMIN')")
+    ResponseEntity<UpdatedLocationResponse> updateLocation(@RequestBody @Valid UpdateLocationRequest request) {
+        Location location = locationService.updateLocation(
+                request.getId(),
+                request.getCity(),
+                request.getRegion(),
+                request.getCountry(),
+                request.getLatitude(),
+                request.getLongitude()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(locationMapper.mapLocationToUpdatedLocationResponse(location));
     }
 }

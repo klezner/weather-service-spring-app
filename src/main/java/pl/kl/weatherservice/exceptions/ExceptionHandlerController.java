@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
@@ -15,6 +16,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleConstraintViolationException(ConstraintViolationException e) {
+        log.warn(e.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleEntityNotFoundException(ConstraintViolationException e) {
         log.warn(e.getMessage());
     }
 }
