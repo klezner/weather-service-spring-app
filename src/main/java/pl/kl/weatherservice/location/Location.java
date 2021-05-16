@@ -26,4 +26,5 @@ class Location {
     private String country;
     private Double latitude;
     private Double longitude;
+    private Long version;
 }

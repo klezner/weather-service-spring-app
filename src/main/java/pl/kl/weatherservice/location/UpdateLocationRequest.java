@@ -22,4 +22,5 @@ public class UpdateLocationRequest {
     @Min(value = -180, message = "Longitude value is too small! The correct longitude range is from -180 to 180.")
     @Max(value = 180, message = "Longitude value is too large! The correct longitude range is from -180 to 180.")
     private Double longitude;
+    private Long version;
 }

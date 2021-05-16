@@ -16,7 +16,7 @@ class LocationController {
     private final LocationService locationService;
 
     @PostMapping()
-//    @PreAuthorize("hasRole('Roles.ADMIN')")
+//    @PreAuthorize("hasRole(T(pl.kl.weatherservice.security.Roles).ADMIN)")
     ResponseEntity<NewLocationResponse> addLocation(@RequestBody @Valid CreateLocationRequest request) {
         Location location = locationService.createLocation(
                 request.getCity(),
@@ -32,7 +32,7 @@ class LocationController {
     }
 
     @PutMapping()
-//    @PreAuthorize("hasRole('Roles.ADMIN')")
+//    @PreAuthorize("hasRole(T(pl.kl.weatherservice.security.Roles).ADMIN)")
     ResponseEntity<UpdatedLocationResponse> updateLocation(@RequestBody @Valid UpdateLocationRequest request) {
         Location location = locationService.updateLocation(
                 request.getId(),
@@ -40,7 +40,8 @@ class LocationController {
                 request.getRegion(),
                 request.getCountry(),
                 request.getLatitude(),
-                request.getLongitude()
+                request.getLongitude(),
+                request.getVersion()
         );
 
         return ResponseEntity

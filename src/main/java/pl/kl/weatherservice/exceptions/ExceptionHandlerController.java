@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.OptimisticLockException;
 import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
@@ -22,6 +23,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleEntityNotFoundException(ConstraintViolationException e) {
+        log.warn(e.getMessage());
+    }
+
+    @ExceptionHandler(OptimisticLockException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public void handleOptimisticLockException(ConstraintViolationException e) {
         log.warn(e.getMessage());
     }
 }
