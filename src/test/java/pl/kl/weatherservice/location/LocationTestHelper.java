@@ -91,4 +91,15 @@ public final class LocationTestHelper {
                 .longitude(218.6)
                 .build();
     }
+
+    static UpdateLocationRequest provideLocationToUpdateRequest(String idOfLocationToUpdate) {
+        return UpdateLocationRequest.builder()
+                .id(idOfLocationToUpdate)
+                .city("Gdansk")
+                .region("Pomeranian")
+                .country("Poland")
+                .latitude(54.35)
+                .longitude(18.67)
+                .build();
+    }
 }

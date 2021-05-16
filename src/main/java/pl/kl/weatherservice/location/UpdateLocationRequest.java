@@ -1,5 +1,6 @@
 package pl.kl.weatherservice.location;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.Max;
@@ -7,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@Builder
 public class UpdateLocationRequest {
 
     @NotBlank(message = "Id is mandatory!")

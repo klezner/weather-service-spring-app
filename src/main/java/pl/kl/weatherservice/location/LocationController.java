@@ -46,7 +46,7 @@ class LocationController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .eTag(version.toString())
+                .eTag(String.valueOf(version))
                 .body(locationMapper.mapLocationToUpdatedLocationResponse(location));
     }
 }
