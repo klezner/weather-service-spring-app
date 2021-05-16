@@ -13,5 +13,4 @@ public class UpdatedLocationResponse {
     private String country;
     private Double latitude;
     private Double longitude;
-    private Long version;
 }

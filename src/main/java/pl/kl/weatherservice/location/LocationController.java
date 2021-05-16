@@ -33,7 +33,7 @@ class LocationController {
 
     @PutMapping()
 //    @PreAuthorize("hasRole(T(pl.kl.weatherservice.security.Roles).ADMIN)")
-    ResponseEntity<UpdatedLocationResponse> updateLocation(@RequestBody @Valid UpdateLocationRequest request) {
+    ResponseEntity<UpdatedLocationResponse> updateLocation(@RequestBody @Valid UpdateLocationRequest request, @RequestHeader("If-Match") Long version) {
         Location location = locationService.updateLocation(
                 request.getId(),
                 request.getCity(),
@@ -41,11 +41,12 @@ class LocationController {
                 request.getCountry(),
                 request.getLatitude(),
                 request.getLongitude(),
-                request.getVersion()
+                version
         );
 
         return ResponseEntity
                 .status(HttpStatus.OK)
+                .eTag(version.toString())
                 .body(locationMapper.mapLocationToUpdatedLocationResponse(location));
     }
 }

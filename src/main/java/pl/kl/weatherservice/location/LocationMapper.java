@@ -24,7 +24,6 @@ class LocationMapper {
                 .country(location.getCountry())
                 .latitude(location.getLatitude())
                 .longitude(location.getLongitude())
-                .version(location.getVersion())
                 .build();
     }
 }
