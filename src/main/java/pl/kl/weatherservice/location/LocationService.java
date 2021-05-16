@@ -21,7 +21,6 @@ class LocationService {
         location.setCountry(country);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
-        location.setVersion(0L);
 
         return locationRepository.save(location);
     }
@@ -30,7 +29,7 @@ class LocationService {
         Location location = locationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No Location was found for id: " + id));
 
-        if (location.getVersion() != version) {
+        if (!location.getVersion().equals(version)) {
             throw new OptimisticLockException("Location version is out of date. Update is not possible");
         }
 
@@ -39,7 +38,6 @@ class LocationService {
         location.setCountry(country);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
-        location.setVersion(version + 1);
 
         return locationRepository.save(location);
     }
