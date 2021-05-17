@@ -38,7 +38,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_thenReturns201AndSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequest();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequest();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +61,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_whenCityIsEmpty_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithEmptyCity();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequestWithEmptyCity();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
@@ -78,7 +78,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_whenCityIsNull_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithNullCity();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequestWithNullCity();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
@@ -95,7 +95,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_whenCountryIsEmpty_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithEmptyCountry();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequestWithEmptyCountry();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
@@ -112,7 +112,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_whenCountryIsNull_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithNullCountry();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequestWithNullCountry();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
@@ -129,7 +129,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_whenLatitudeIsOutOfRange_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithLatitudeOutOfRange();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequestWithLatitudeOutOfRange();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
@@ -146,7 +146,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void createLocation_whenLongitudeIsOutOfRange_thenReturns400AndDoesntSaveNewLocationToDb() throws Exception {
         // given
-        CreateLocationRequest requestBody = LocationTestHelper.provideLocationRequestWithLongitudeOutOfRange();
+        CreateLocationRequest requestBody = LocationTestHelper.provideCreateLocationRequestWithLongitudeOutOfRange();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/location")
@@ -163,7 +163,7 @@ public class LocationControllerIntegrationTest {
     @Test
     void updateLocation_thenReturns200andUpdateInDb() throws Exception {
         // given
-        CreateLocationRequest createRequestBody = LocationTestHelper.provideLocationRequest();
+        CreateLocationRequest createRequestBody = LocationTestHelper.provideCreateLocationRequest();
         MockHttpServletRequestBuilder createRequest = MockMvcRequestBuilders
                 .post("/location")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -175,7 +175,7 @@ public class LocationControllerIntegrationTest {
         String idOfCreatedLocation = locationRepository.findAll().stream()
                 .findFirst().orElse(new Location()).getId();
 
-        UpdateLocationRequest updateRequestBody = LocationTestHelper.provideLocationToUpdateRequest(idOfCreatedLocation);
+        UpdateLocationRequest updateRequestBody = LocationTestHelper.provideUpdateLocationRequest(idOfCreatedLocation);
         MockHttpServletRequestBuilder updateRequest = MockMvcRequestBuilders
                 .put("/location")
                 .contentType(MediaType.APPLICATION_JSON)

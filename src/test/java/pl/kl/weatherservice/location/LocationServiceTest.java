@@ -26,32 +26,32 @@ public class LocationServiceTest {
     @Test
     void createLocation_thenCreatesNewLocation() {
         // given
-        when(locationRepository.save(any())).thenReturn(LocationTestHelper.provideLocation());
+        when(locationRepository.save(any())).thenReturn(LocationTestHelper.provideLocationToCreate());
         // when
         locationService.createLocation("Gdansk", "Pomeranian", "Poland", 54.3, 18.6);
-        //then
+        // then
         verify(locationRepository).save(locationArgumentCaptor.capture());
         Location location = locationArgumentCaptor.getValue();
-        assertThat(location.getCity().equals("Gdansk"));
-        assertThat(location.getRegion().equals("Pomeranian"));
-        assertThat(location.getCountry().equals("Poland"));
-        assertThat(location.getLatitude().equals(54.3));
-        assertThat(location.getLongitude().equals(18.6));
+        assertThat(location.getCity()).isEqualTo("Gdansk");
+        assertThat(location.getRegion()).isEqualTo("Pomeranian");
+        assertThat(location.getCountry()).isEqualTo("Poland");
+        assertThat(location.getLatitude()).isEqualTo(54.3);
+        assertThat(location.getLongitude()).isEqualTo(18.6);
     }
 
     @Test
     void createLocation_whenRegionIsEmpty_thenCreatesNewLocation() {
         // given
-        when(locationRepository.save(any())).thenReturn(LocationTestHelper.provideLocationWithEmptyRegion());
+        when(locationRepository.save(any())).thenReturn(LocationTestHelper.provideLocationToCreateWithEmptyRegion());
         // when
         locationService.createLocation("Gdansk", "", "Poland", 54.3, 18.6);
-        //then
+        // then
         verify(locationRepository).save(locationArgumentCaptor.capture());
         Location location = locationArgumentCaptor.getValue();
-        assertThat(location.getCity().equals("Gdansk"));
-        assertThat(location.getRegion() == null);
-        assertThat(location.getCountry().equals("Poland"));
-        assertThat(location.getLatitude().equals(54.3));
-        assertThat(location.getLongitude().equals(18.6));
+        assertThat(location.getCity()).isEqualTo("Gdansk");
+        assertThat(location.getRegion()).isNull();
+        assertThat(location.getCountry()).isEqualTo("Poland");
+        assertThat(location.getLatitude()).isEqualTo(54.3);
+        assertThat(location.getLongitude()).isEqualTo(18.6);
     }
 }

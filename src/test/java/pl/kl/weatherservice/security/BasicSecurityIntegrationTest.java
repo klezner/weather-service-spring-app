@@ -31,7 +31,7 @@ public class BasicSecurityIntegrationTest {
         //given
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/location")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(LocationTestHelper.provideLocationRequest()));
+                .content(objectMapper.writeValueAsString(LocationTestHelper.provideCreateLocationRequest()));
         //when
         MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
         //then
@@ -44,7 +44,7 @@ public class BasicSecurityIntegrationTest {
         //given
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/location")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(LocationTestHelper.provideLocationRequest()));
+                .content(objectMapper.writeValueAsString(LocationTestHelper.provideCreateLocationRequest()));
         //when
         MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
         //then
@@ -56,7 +56,7 @@ public class BasicSecurityIntegrationTest {
         //given
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/location")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(LocationTestHelper.provideLocationRequest()));
+                .content(objectMapper.writeValueAsString(LocationTestHelper.provideCreateLocationRequest()));
         //when
         MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
         //then
