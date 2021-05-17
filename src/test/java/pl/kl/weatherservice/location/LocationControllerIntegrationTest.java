@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -195,5 +197,81 @@ public class LocationControllerIntegrationTest {
             assertThat(location.getVersion()).isEqualTo(1L);
         });
         assertThat(response.getHeader("ETag")).isEqualTo("\"0\"");
+    }
+
+    @Test
+    void updateLocation_whenLocationIsNotFoundById_thenReturns404andDoesntUpdateInDb() throws Exception {
+        // given
+        CreateLocationRequest createRequestBody = LocationTestHelper.provideCreateLocationRequest();
+        MockHttpServletRequestBuilder createRequest = MockMvcRequestBuilders
+                .post("/location")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(createRequestBody));
+
+        mockMvc.perform(createRequest)
+                .andReturn().getResponse();
+
+        String idOfCreatedLocation = locationRepository.findAll().stream()
+                .findFirst().orElse(new Location()).getId();
+
+        String randomId = UUID.randomUUID().toString();
+
+        UpdateLocationRequest updateRequestBody = LocationTestHelper.provideUpdateLocationRequest(randomId);
+        MockHttpServletRequestBuilder updateRequest = MockMvcRequestBuilders
+                .put("/location")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateRequestBody))
+                .header("If-Match", 0L);
+        // when
+        MockHttpServletResponse response = mockMvc.perform(updateRequest).andReturn().getResponse();
+        // then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(locationRepository.findAll()).hasOnlyOneElementSatisfying(location -> {
+            assertThat(location.getId()).isEqualTo(idOfCreatedLocation);
+            assertThat(location.getCity()).isEqualTo("Gdansk");
+            assertThat(location.getRegion()).isEqualTo("Pomeranian");
+            assertThat(location.getCountry()).isEqualTo("Poland");
+            assertThat(location.getLatitude()).isEqualTo(54.3);
+            assertThat(location.getLongitude()).isEqualTo(18.6);
+            assertThat(location.getVersion()).isEqualTo(0L);
+        });
+        assertThat(response.getHeader("ETag")).isEqualTo(null);
+    }
+
+    @Test
+    void updateLocation_whenIfMatchIsIncorrect_thenReturns409andDoesntUpdateInDb() throws Exception {
+        // given
+        CreateLocationRequest createRequestBody = LocationTestHelper.provideCreateLocationRequest();
+        MockHttpServletRequestBuilder createRequest = MockMvcRequestBuilders
+                .post("/location")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(createRequestBody));
+
+        mockMvc.perform(createRequest)
+                .andReturn().getResponse();
+
+        String idOfCreatedLocation = locationRepository.findAll().stream()
+                .findFirst().orElse(new Location()).getId();
+
+        UpdateLocationRequest updateRequestBody = LocationTestHelper.provideUpdateLocationRequest(idOfCreatedLocation);
+        MockHttpServletRequestBuilder updateRequest = MockMvcRequestBuilders
+                .put("/location")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateRequestBody))
+                .header("If-Match", 10L);
+        // when
+        MockHttpServletResponse response = mockMvc.perform(updateRequest).andReturn().getResponse();
+        // then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.CONFLICT.value());
+        assertThat(locationRepository.findAll()).hasOnlyOneElementSatisfying(location -> {
+            assertThat(location.getId()).isEqualTo(idOfCreatedLocation);
+            assertThat(location.getCity()).isEqualTo("Gdansk");
+            assertThat(location.getRegion()).isEqualTo("Pomeranian");
+            assertThat(location.getCountry()).isEqualTo("Poland");
+            assertThat(location.getLatitude()).isEqualTo(54.3);
+            assertThat(location.getLongitude()).isEqualTo(18.6);
+            assertThat(location.getVersion()).isEqualTo(0L);
+        });
+        assertThat(response.getHeader("ETag")).isEqualTo(null);
     }
 }

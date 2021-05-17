@@ -22,13 +22,13 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleEntityNotFoundException(ConstraintViolationException e) {
+    public void handleEntityNotFoundException(EntityNotFoundException e) {
         log.warn(e.getMessage());
     }
 
     @ExceptionHandler(OptimisticLockException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public void handleOptimisticLockException(ConstraintViolationException e) {
+    public void handleOptimisticLockException(OptimisticLockException e) {
         log.warn(e.getMessage());
     }
 }
