@@ -194,6 +194,6 @@ public class LocationControllerIntegrationTest {
             assertThat(location.getLongitude()).isEqualTo(18.67);
             assertThat(location.getVersion()).isEqualTo(1L);
         });
-        assertThat(response.getHeader("ETag").replace("\"", "")).isEqualTo("0");
+        assertThat(response.getHeader("ETag")).isEqualTo("\"0\"");
     }
 }
