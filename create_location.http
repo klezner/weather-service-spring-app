@@ -1,4 +1,0 @@
-POST http://localhost:8080/location
-Content-Type: application/json
-
-{"city": "Kartuzy", "region": "pomorskie", "country": "Polska", "longitude": 18, "latitude": 54}

@@ -2,7 +2,10 @@ package pl.kl.weatherservice.location;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.OptimisticLockException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -21,5 +24,23 @@ class LocationService {
         location.setLongitude(longitude);
 
         return locationRepository.save(location);
+    }
+
+    @Transactional
+    public Location updateLocation(String id, String city, String region, String country, Double latitude, Double longitude, Long version) {
+        Location location = locationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Location was found for id: " + id));
+
+        if (!location.getVersion().equals(version)) {
+            throw new OptimisticLockException("Location version is out of date. Update is not possible");
+        }
+
+        location.setCity(city);
+        Optional.ofNullable(region).filter(Predicate.not(String::isBlank)).ifPresent(location::setRegion);
+        location.setCountry(country);
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+
+        return location;
     }
 }

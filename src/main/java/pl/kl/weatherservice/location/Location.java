@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 @AllArgsConstructor
@@ -26,4 +27,6 @@ class Location {
     private String country;
     private Double latitude;
     private Double longitude;
+    @Version
+    private Long version;
 }

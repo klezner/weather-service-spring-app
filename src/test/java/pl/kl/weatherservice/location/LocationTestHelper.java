@@ -2,7 +2,7 @@ package pl.kl.weatherservice.location;
 
 public final class LocationTestHelper {
 
-    static Location provideLocation() {
+    static Location provideLocationToCreate() {
         return Location.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
@@ -12,7 +12,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static Location provideLocationWithEmptyRegion() {
+    static Location provideLocationToCreateWithEmptyRegion() {
         return Location.builder()
                 .city("Gdansk")
                 .region(null)
@@ -22,7 +22,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    public static CreateLocationRequest provideLocationRequest() {
+    public static CreateLocationRequest provideCreateLocationRequest() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
@@ -32,7 +32,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestWithEmptyCity() {
+    static CreateLocationRequest provideCreateLocationRequestWithEmptyCity() {
         return CreateLocationRequest.builder()
                 .city("")
                 .region("Pomeranian")
@@ -42,7 +42,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestWithNullCity() {
+    static CreateLocationRequest provideCreateLocationRequestWithNullCity() {
         return CreateLocationRequest.builder()
                 .city(null)
                 .region("Pomeranian")
@@ -52,7 +52,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestWithEmptyCountry() {
+    static CreateLocationRequest provideCreateLocationRequestWithEmptyCountry() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
@@ -62,7 +62,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestWithNullCountry() {
+    static CreateLocationRequest provideCreateLocationRequestWithNullCountry() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
@@ -72,7 +72,7 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestWithLatitudeOutOfRange() {
+    static CreateLocationRequest provideCreateLocationRequestWithLatitudeOutOfRange() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
@@ -82,13 +82,24 @@ public final class LocationTestHelper {
                 .build();
     }
 
-    static CreateLocationRequest provideLocationRequestWithLongitudeOutOfRange() {
+    static CreateLocationRequest provideCreateLocationRequestWithLongitudeOutOfRange() {
         return CreateLocationRequest.builder()
                 .city("Gdansk")
                 .region("Pomeranian")
                 .country("Poland")
                 .latitude(54.3)
                 .longitude(218.6)
+                .build();
+    }
+
+    static UpdateLocationRequest provideUpdateLocationRequest(String idOfLocationToUpdate) {
+        return UpdateLocationRequest.builder()
+                .id(idOfLocationToUpdate)
+                .city("Gdansk")
+                .region("Pomeranian")
+                .country("Poland")
+                .latitude(54.35)
+                .longitude(18.67)
                 .build();
     }
 }
