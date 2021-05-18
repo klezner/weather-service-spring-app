@@ -17,4 +17,10 @@ public class ExceptionHandlerController {
     public void handleConstraintViolationException(ConstraintViolationException e) {
         log.warn(e.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public void handleIllegalArgumentException(IllegalArgumentException e) {
+        log.warn(e.getMessage());
+    }
 }

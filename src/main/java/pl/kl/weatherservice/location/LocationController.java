@@ -1,13 +1,13 @@
 package pl.kl.weatherservice.location;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,5 +33,11 @@ class LocationController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(locationMapper.mapLocationToNewLocationResponse(location));
+    }
+
+    @GetMapping()
+    Page<Location> getLocationsPaginated(@RequestParam(name = "offset") int offset, @RequestParam(name = "sort") String sort) {
+
+        return locationService.listLocationsPaginated(PageRequest.of(offset, 5, Sort.by(Sort.Direction.fromString(sort), "city")));
     }
 }

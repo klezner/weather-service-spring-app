@@ -1,6 +1,8 @@
 package pl.kl.weatherservice.location;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -21,5 +23,10 @@ class LocationService {
         location.setLongitude(longitude);
 
         return locationRepository.save(location);
+    }
+
+    Page<Location> listLocationsPaginated(PageRequest pageRequest) {
+
+        return locationRepository.findAll(pageRequest);
     }
 }
